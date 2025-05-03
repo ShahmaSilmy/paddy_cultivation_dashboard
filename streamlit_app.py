@@ -120,10 +120,21 @@ st.plotly_chart(fig3, use_container_width=True)
 
 st.subheader("Districts' Contribution to the Total Paddy Production")
 
-#Exclude national row if present
-district_df = df[df["District"] != "SRI LANKA"]
+pie_year = st.sidebar.selectbox("Select Year for Pie Chart",sorted(df['Year'].astype(int).unique()),key ="pie_year")
+pie_season = st.sidebar.selectbox("Select Season for Pie Chart",sorted(df['Season'].unique()),key = "pie_season")
 
-district_production = district_df.groupby("District")["Production_MT"].sum().reset_index()
+#Filter the data
+pie_df = df[(df['Year'] == pie_year) & (df['Season'] == pie_season)]
+
+
+pie_df =df[
+    (df['Year']==pie_year) &
+    (df['Season']==pie_season) &
+    (df['District'].str.strip().str.upper() != 'SRI LANKA')
+]
+
+#group by
+district_production = pie_df.groupby("District")["Production_MT"].sum().reset_index()
 
 #creating pie chart
 fig4 = px.pie(
@@ -134,4 +145,4 @@ fig4 = px.pie(
 )
 
 #show chart
-st.plotly_chart(fig4, use_container_width=True)
+st.plotly_chart(fig4)
