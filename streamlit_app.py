@@ -39,3 +39,28 @@ def load_data():
     df = pd.read_csv(path)
     return df
 
+##plot 1
+
+import plotly.express as px
+
+#Grouping by district and sum of production
+prod_by_district = df.groupby('District')['Production_MT'].sum().reset_index()
+
+#sort by production for good visualisation
+prod_by_district = prod_by_district.sort_values(by="Production_MT",ascending=False)
+
+#Get the bar chart
+fig1 = px.bar(
+    data_frame=prod_by_district,
+    x = "District",
+    y = "Production_MT",
+    title = "Total Paddy Production by District (2020-2023)",
+    color = "Production_MT",
+    color_continuous_scale = "ylgn"
+)
+
+#to display it in the streamlit application
+st.plotly_chart(fig1, use_container_width=True)
+
+##plot2
+
