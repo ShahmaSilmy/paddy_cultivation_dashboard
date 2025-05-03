@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 #For Title
 st.title("Paddy Cultivation Dashboard - Sri Lanka (2020 - 2023)")
@@ -33,7 +34,8 @@ import os
 def load_data():
     path = "paddy_2020_2023_cleaned.csv"
     if not os.path.exists(path):
-        st.error(f"❌ File not found: {path}")
+        st.error(f"File not found: {path}")
         return pd.DataFrame()  # return empty df
     df = pd.read_csv(path)
     return df
+
