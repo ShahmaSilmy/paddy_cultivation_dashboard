@@ -64,3 +64,34 @@ st.plotly_chart(fig1, use_container_width=True)
 
 ##plot2
 
+# Ensure 'Yield_Average' is numeric
+avg_yield_trend = df.groupby("Year")['Yield_Average'].mean().reset_index()
+
+# Explicitly convert 'Year' to integer after grouping to remove decimal points
+avg_yield_trend['Year'] = avg_yield_trend['Year'].astype(int)
+
+#plot using the plotly library
+fig2 = px.line(
+    avg_yield_trend,
+    x = 'Year',
+    y = 'Yield_Average',
+    markers= True,
+    title= "National Average Paddy Yield Trend (2020-2023)",
+    labels = {'Yield_Average': 'Average Yield', 'Year': 'Year'},
+    line_shape = "linear"
+)
+
+fig2.update_traces(
+    mode = 'lines+markers',
+    line = dict(color = 'green',width = 3),
+    marker=dict(size=8)
+)
+fig2.update_layout(
+    hovermode='x unified',
+    template= 'plotly_white',
+    xaxis=dict(
+        tickformat = "d"
+    )
+)
+st.plotly_chart(fig2, use_container_width=True)
+
