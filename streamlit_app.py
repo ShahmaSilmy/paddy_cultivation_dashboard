@@ -62,7 +62,7 @@ fig1 = px.bar(
 #to display it in the streamlit application
 st.plotly_chart(fig1, use_container_width=True)
 
-##plot2
+##plot 2
 
 # Ensure 'Yield_Average' is numeric
 avg_yield_trend = df.groupby("Year")['Yield_Average'].mean().reset_index()
@@ -95,3 +95,43 @@ fig2.update_layout(
 )
 st.plotly_chart(fig2, use_container_width=True)
 
+#plot 3 
+
+seasonal_df = df[df["District"] != "SRI LANKA"]
+
+prod_by_district = seasonal_df.groupby("District")["Production_MT"].sum().reset_index()
+
+prod_by_district = prod_by_district.sort_values(by="Production_MT",ascending=False)
+
+#creating the bar chart
+fig3 = px.bar(
+    prod_by_district,
+    x = "District",
+    y = "Production_MT",
+    title = "Total Paddy Production by District Level (2020 - 2023)",
+    color = "Production_MT",
+    color_continuous_scale="twilight"
+)
+
+#To display in the streamlit app
+st.plotly_chart(fig3, use_container_width=True)
+
+#plot 4
+
+st.subheader("Districts' Contribution to the Total Paddy Production")
+
+#Exclude national row if present
+district_df = df[df["District"] != "SRI LANKA"]
+
+district_production = district_df.groupby("District")["Production_MT"].sum().reset_index()
+
+#creating pie chart
+fig4 = px.pie(
+    district_production,
+    names="District",
+    values="Production_MT",
+    title = "Total Paddy Production by District in % (2020-2023)"  
+)
+
+#show chart
+st.plotly_chart(fig4, use_container_width=True)
