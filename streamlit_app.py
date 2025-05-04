@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 
+st.set_page_config(page_title= "Paddy Cultivation Dashboard", layout = "wide")
+
 #For Title
 st.title("Paddy Cultivation Dashboard - Sri Lanka (2020 - 2023)")
 
@@ -127,6 +129,8 @@ fig2.update_layout(
 st.plotly_chart(fig2, use_container_width=True)
 
 ##plot 3 
+st.subheader("District level Paddy Production for Years and Season")
+
 df['District'] = df['District'].str.strip().str.upper()
 seasonal_df = df[df["District"] != "SRI LANKA"]
 
