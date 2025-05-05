@@ -65,7 +65,7 @@ filtered_district_df = filtered_df[filtered_df['District'].isin(selected_destric
 prod_by_district = filtered_district_df.groupby('District')['Production_MT'].sum().reset_index()
 
 #sort by production for good visualisation
-prod_by_district = filtered_district_df.sort_values(by="Production_MT",ascending=False)
+prod_by_district = prod_by_district.sort_values(by="Production_MT",ascending=False)
 
 #Get the bar chart
 fig1 = px.bar(
